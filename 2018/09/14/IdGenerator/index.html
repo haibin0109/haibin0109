@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="百泽的博客">
+    <meta name="keyword"  content="腾讯">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        唯一ID生成工具 - Baize的博客 | Baize&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> sometimes code, sometimes design </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Yun Haibin</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#全局唯一ID的几种生成方案"><span class="toc-text">全局唯一ID的几种生成方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方案一：Java-UUID"><span class="toc-text">方案一：Java UUID</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方案二：Twitter开源snowflake算法"><span class="toc-text">方案二：Twitter开源snowflake算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方案三：毫秒时间-自增数"><span class="toc-text">方案三：毫秒时间+自增数</span></a></li></ol></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+        <div class="index-about-mobile">
+            <i> sometimes code, sometimes design </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        唯一ID生成工具
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2018-09-14 00:28:06</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#architecture" title="architecture">architecture</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h2 id="全局唯一ID的几种生成方案"><a href="#全局唯一ID的几种生成方案" class="headerlink" title="全局唯一ID的几种生成方案"></a>全局唯一ID的几种生成方案</h2><h3 id="方案一：Java-UUID"><a href="#方案一：Java-UUID" class="headerlink" title="方案一：Java UUID"></a>方案一：Java UUID</h3><p>Java UUID算法的核心思想是结合机器的网卡、机器时间、通过这些seed构造一个随机数用来生成UUID。<br><strong>优点：</strong></p>
+<ol>
+<li>本地生成ID，不需要进行远程调用，时延低；</li>
+<li>扩展性好，基本可以认为没有性能上限；</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>无法保证趋势有序；</li>
+<li>uuid过长且为字符串表示，作为主键建立索引查询效率低；</li>
+</ol>
+<h3 id="方案二：Twitter开源snowflake算法"><a href="#方案二：Twitter开源snowflake算法" class="headerlink" title="方案二：Twitter开源snowflake算法"></a>方案二：Twitter开源snowflake算法</h3><p>snowflake是Twitter开源的分布式ID生成算法，结果是一个64位long型的ID。其核心思想是：1位标识（由于long基本类型在Java中是带符号的，最高位是符号位，正数是0，负数是1，所以id一般是正数，最高位是0），使用41bit作为毫秒数，10bit作为机器的ID（可以部署在1024个节点，5个bit是数据中心，5个bit的机器ID），12bit作为毫秒内的流水号（意味着每个节点在每毫秒可以产生4096个ID）。<br><strong>例如：</strong>时间戳是1426212000000，假定分片ID是53，自增长序列是4，则生成的ID是：<br>5981966696448054276 = 1426212000000 &lt;&lt; 22 + 53 &lt;&lt; 10 + 4<br><strong>优点：</strong></p>
+<ol>
+<li>整个分布式系统内不会产生ID碰撞(由数据中心ID和机器ID作区分)；</li>
+<li>数字ID趋势有序；</li>
+<li>不依赖于数据库，灵活方便，且性能优于数据库；</li>
+<li>单个节点每毫秒理论可以生成4096个ID，性能可通过DataId+MachineId进行扩展；</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>需要使用者自己维护DataId与MachineId；</li>
+<li>在单机上是递增的，但是由于涉及到分布式环境，每台机器上的时钟不可能完全同步，所以多台机器同时生成不能保证全局递增；</li>
+</ol>
+<h3 id="方案三：毫秒时间-自增数"><a href="#方案三：毫秒时间-自增数" class="headerlink" title="方案三：毫秒时间+自增数"></a>方案三：毫秒时间+自增数</h3><p>采用毫秒时间18位数字+3位自增数，每毫秒理论最多可以生成100个，方法内保证线程安全，单点不会出现重复。<br><strong>优点：</strong></p>
+<ol>
+<li>使用简单，性能尚可；</li>
+<li>生成ID趋势有序；</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>多节点高并发下不保证唯一；</li>
+<li>数字有明显的规律可循；</li>
+</ol>
+
+        
+        <div id="comment-container">
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+
+        
+
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+</html>
