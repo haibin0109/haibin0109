@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="百泽的博客">
+    <meta name="keyword"  content="腾讯">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        Javassist动态编程 - Baize的博客 | Baize&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> sometimes code, sometimes design </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Yun Haibin</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#项目地址"><span class="toc-text">项目地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Javassist动态编程"><span class="toc-text">Javassist动态编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特别注意："><span class="toc-text">特别注意：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重点来了"><span class="toc-text">重点来了</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dubbo为什么使用Javassist替代反射"><span class="toc-text">Dubbo为什么使用Javassist替代反射</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+        <div class="index-about-mobile">
+            <i> sometimes code, sometimes design </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        Javassist动态编程
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2018-09-10 19:28:06</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#architecture" title="architecture">architecture</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <blockquote>
+<p>Javassist是一个开源的分析、编辑和创建Java字节码的类库。是由东京工业大学的数学和计算机科学系的 Shigeru Chiba （千叶 滋）所创建的。它已加入了开放源代码JBoss 应用服务器项目,通过使用Javassist对字节码操作为JBoss实现动态”AOP”框架。</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h3><p><a href="https://github.com/jboss-javassist/javassist" target="_blank" rel="noopener">https://github.com/jboss-javassist/javassist</a></p>
+<p><a href="http://jboss-javassist.github.io/javassist" target="_blank" rel="noopener">http://jboss-javassist.github.io/javassist</a></p>
+<h3 id="Javassist动态编程"><a href="#Javassist动态编程" class="headerlink" title="Javassist动态编程"></a>Javassist动态编程</h3><p>要想将编译时不存在的类在运行时动态创建并加载，通常有两种策略：</p>
+<ol>
+<li>动态编译</li>
+<li>动态生成二进制字节码（.class）</li>
+</ol>
+<p>对于第二种策略，实际上已经有诸多比较成熟的开源项目提供支持，如CGLib、ASM、Javassist等。这些开源项目通常都具备两方面的功能：</p>
+<ol>
+<li>动态创建新类或新接口的二进制字节码</li>
+<li>动态扩展现有类或接口的二进制字节码</li>
+</ol>
+<p>我们常用到的动态特性主要是反射，在运行时查找对象属性、方法，修改作用域，通过方法名称调用方法等。在线的应用不会频繁使用反射，因为反射的性能开销较大。其实还有一种和反射一样强大的特性，但是开销却很低，它就是Javassit。</p>
+<p>Javassit其实就是一个二方包，提供了运行时操作Java字节码的方法。大家都知道，Java代码编译完会生成.class文件，就是一堆字节码。JVM(准确说是JIT)会解释执行这些字节码(转换为机器码并执行)，由于字节码的解释执行是在运行时进行的，那我们能否手工编写字节码，再由JVM执行呢？答案是肯定的，而Javassist就提供了一些方便的方法，让我们通过这些方法生成字节码。</p>
+<p>类似字节码操作方法还有ASM。几种动态编程方法相比较，在性能上Javassist高于反射，但低于ASM，因为Javassist增加了一层抽象。在实现成本上Javassist和反射都很低，而ASM由于直接操作字节码，相比Javassist源码级别的api实现成本高很多。几个方法有自己的应用场景，比如Kryo使用的是ASM，追求性能的最大化。而NBeanCopyUtil采用的是Javassist，在对象拷贝的性能上也已经明显高于其他的库，并保持高易用性。实际项目中推荐先用Javassist实现原型，若在性能测试中发现Javassist成为了性能瓶颈，再考虑使用其他字节码操作方法做优化。</p>
+<p>总结：CGLib的底层基于ASM实现，是一个高效高性能的生成库；而ASM是一个轻量级的类库，但需要涉及到JVM的操作和指令；相比而言，Javassist要简单的多，完全是基于Java的API，但其性能相比前二者要差一些。在性能要求相对低的场合，Javassist仍然十分有用，如JBoss中就调用了Javassist。</p>
+<p>如下的代码是动态创建Java类二进制字节码并通过反射调用的示例，可供参考：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javassist.CannotCompileException;</span><br><span class="line"><span class="keyword">import</span> javassist.ClassPool;</span><br><span class="line"><span class="keyword">import</span> javassist.CtClass;</span><br><span class="line"><span class="keyword">import</span> javassist.CtConstructor;</span><br><span class="line"><span class="keyword">import</span> javassist.CtField;</span><br><span class="line"><span class="keyword">import</span> javassist.CtNewMethod;</span><br><span class="line"><span class="keyword">import</span> javassist.Modifier;</span><br><span class="line"><span class="keyword">import</span> javassist.NotFoundException;</span><br><span class="line"><span class="keyword">import</span> javassist.CtField.Initializer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavassistGenerator</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> CannotCompileException, NotFoundException, InstantiationException, IllegalAccessException, ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException </span>&#123;</span><br><span class="line">		<span class="comment">// 创建类</span></span><br><span class="line">		ClassPool pool = ClassPool.getDefault();</span><br><span class="line">		CtClass cls = pool.makeClass(<span class="string">"cn.ibm.com.TestClass"</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 添加私有成员name及其getter、setter方法</span></span><br><span class="line">		CtField param = <span class="keyword">new</span> CtField(pool.get(<span class="string">"java.lang.String"</span>), <span class="string">"name"</span>, cls);</span><br><span class="line">		param.setModifiers(Modifier.PRIVATE);</span><br><span class="line">		cls.addMethod(CtNewMethod.setter(<span class="string">"setName"</span>, param));</span><br><span class="line">		cls.addMethod(CtNewMethod.getter(<span class="string">"getName"</span>, param));</span><br><span class="line">		cls.addField(param, Initializer.constant(<span class="string">""</span>));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 添加无参的构造体</span></span><br><span class="line">		CtConstructor cons = <span class="keyword">new</span> CtConstructor(<span class="keyword">new</span> CtClass[] &#123;&#125;, cls);</span><br><span class="line">		cons.setBody(<span class="string">"&#123;name = \"Brant\";&#125;"</span>);</span><br><span class="line">		cls.addConstructor(cons);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 添加有参的构造体</span></span><br><span class="line">		cons = <span class="keyword">new</span> CtConstructor(<span class="keyword">new</span> CtClass[] &#123;pool.get(<span class="string">"java.lang.String"</span>)&#125;, cls);</span><br><span class="line">		cons.setBody(<span class="string">"&#123;$0.name = $1;&#125;"</span>);</span><br><span class="line">		cls.addConstructor(cons);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 打印创建类的类名</span></span><br><span class="line">		System.out.println(cls.toClass());</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 通过反射创建无参的实例，并调用getName方法</span></span><br><span class="line">		Object o = Class.forName(<span class="string">"cn.ibm.com.TestClass"</span>).newInstance();</span><br><span class="line">		Method getter = o.getClass().getMethod(<span class="string">"getName"</span>);</span><br><span class="line">		System.out.println(getter.invoke(o));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 调用其setName方法</span></span><br><span class="line">		Method setter = o.getClass().getMethod(<span class="string">"setName"</span>, <span class="keyword">new</span> Class[] &#123;String.class&#125;);</span><br><span class="line">		setter.invoke(o, <span class="string">"Adam"</span>);</span><br><span class="line">		System.out.println(getter.invoke(o));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 通过反射创建有参的实例，并调用getName方法</span></span><br><span class="line">		o = Class.forName(<span class="string">"cn.ibm.com.TestClass"</span>).getConstructor(String.class).newInstance(<span class="string">"Liu Jian"</span>);</span><br><span class="line">		getter = o.getClass().getMethod(<span class="string">"getName"</span>);</span><br><span class="line">		System.out.println(getter.invoke(o));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="特别注意："><a href="#特别注意：" class="headerlink" title="特别注意："></a>特别注意：</h3><ol>
+<li>Javassist不支持要创建或注入的类中存在泛型参数</li>
+<li>Javassist对@类型的注解（Annotation）只支持查询，不支持添加或修改</li>
+</ol>
+<p>参考：</p>
+<ul>
+<li><p>Javassist学习总结<br><a href="http://blog.csdn.net/sadfishsc/article/details/9999169" target="_blank" rel="noopener">http://blog.csdn.net/sadfishsc/article/details/9999169</a></p>
+</li>
+<li><p>javassist学习<br><a href="http://yonglin4605.iteye.com/blog/1396494" target="_blank" rel="noopener">http://yonglin4605.iteye.com/blog/1396494</a></p>
+</li>
+<li><p>Java动态编程初探——Javassist<br><a href="http://www.cnblogs.com/hucn/p/3636912.html" target="_blank" rel="noopener">http://www.cnblogs.com/hucn/p/3636912.html</a></p>
+</li>
+</ul>
+<hr>
+<h2 id="重点来了"><a href="#重点来了" class="headerlink" title="重点来了"></a>重点来了</h2><h3 id="Dubbo为什么使用Javassist替代反射"><a href="#Dubbo为什么使用Javassist替代反射" class="headerlink" title="Dubbo为什么使用Javassist替代反射"></a>Dubbo为什么使用Javassist替代反射</h3><p>以下内容摘自Dubbo官网：</p>
+<blockquote>
+<p>Dubbo框架中使用到Javassist ProxyFactory Stable通过字节码生成代替反射，性能比较好（推荐使用）    依赖于javassist.jar包，占用JVM的Perm内存，Perm可能要设大一些：java -XX:PermSize=128m    可用于生产环境    Alibaba</p>
+</blockquote>
+<p>直接上Dubbo核心领域（Proxy）代码，看看怎么使用Javassist的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">核心领域中的代理实现类：com.alibaba.dubbo.common.bytecode.Proxy</span></span><br><span class="line"><span class="comment">通过它实例化服务提供者的接口实现类，也就是具体业务逻辑方法；</span></span><br><span class="line"><span class="comment">不过别着急，这里还没有出现Javassist的影子，注意看其中的：</span></span><br><span class="line"><span class="comment">com.alibaba.dubbo.common.bytecode.ClassGenerator</span></span><br><span class="line"><span class="comment">这个是阿里自己根据需要又在Javassist上面封装的一个工具类，直接共Proxy类使用</span></span><br><span class="line"><span class="comment">后面贴上ClassGenerator的部分核心代码，里面有直接调用Javassist动态创建类；</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">long</span> id = PROXY_CLASS_COUNTER.getAndIncrement();</span><br><span class="line">String pkg = <span class="keyword">null</span>;</span><br><span class="line">ClassGenerator ccp = <span class="keyword">null</span>, ccm = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">	ccp = ClassGenerator.newInstance(cl);</span><br><span class="line"></span><br><span class="line">	Set&lt;String&gt; worked = <span class="keyword">new</span> HashSet&lt;String&gt;();</span><br><span class="line">	List&lt;Method&gt; methods = <span class="keyword">new</span> ArrayList&lt;Method&gt;();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;ics.length;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>( !Modifier.isPublic(ics[i].getModifiers()) )</span><br><span class="line">		&#123;</span><br><span class="line">			String npkg = ics[i].getPackage().getName();</span><br><span class="line">			<span class="keyword">if</span>( pkg == <span class="keyword">null</span> )</span><br><span class="line">			&#123;</span><br><span class="line">				pkg = npkg;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span>( !pkg.equals(npkg)  )</span><br><span class="line">					<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"non-public interfaces from different packages"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		ccp.addInterface(ics[i]);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span>( Method method : ics[i].getMethods() )</span><br><span class="line">		&#123;</span><br><span class="line">			String desc = ReflectUtils.getDesc(method);</span><br><span class="line">			<span class="keyword">if</span>( worked.contains(desc) )</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			worked.add(desc);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">int</span> ix = methods.size();</span><br><span class="line">			Class&lt;?&gt; rt = method.getReturnType();</span><br><span class="line">			Class&lt;?&gt;[] pts = method.getParameterTypes();</span><br><span class="line"></span><br><span class="line">			StringBuilder code = <span class="keyword">new</span> StringBuilder(<span class="string">"Object[] args = new Object["</span>).append(pts.length).append(<span class="string">"];"</span>);</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;pts.length;j++)</span><br><span class="line">				code.append(<span class="string">" args["</span>).append(j).append(<span class="string">"] = ($w)$"</span>).append(j+<span class="number">1</span>).append(<span class="string">";"</span>);</span><br><span class="line">			code.append(<span class="string">" Object ret = handler.invoke(this, methods["</span> + ix + <span class="string">"], args);"</span>);</span><br><span class="line">			<span class="keyword">if</span>( !Void.TYPE.equals(rt) )</span><br><span class="line">				code.append(<span class="string">" return "</span>).append(asArgument(rt, <span class="string">"ret"</span>)).append(<span class="string">";"</span>);</span><br><span class="line"></span><br><span class="line">			methods.add(method);</span><br><span class="line">			ccp.addMethod(method.getName(), method.getModifiers(), rt, pts, method.getExceptionTypes(), code.toString());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>( pkg == <span class="keyword">null</span> )</span><br><span class="line">		pkg = PACKAGE_NAME;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// create ProxyInstance class.</span></span><br><span class="line">	String pcn = pkg + <span class="string">".proxy"</span> + id;</span><br><span class="line">	ccp.setClassName(pcn);</span><br><span class="line">	ccp.addField(<span class="string">"public static java.lang.reflect.Method[] methods;"</span>);</span><br><span class="line">	ccp.addField(<span class="string">"private "</span> + InvocationHandler.class.getName() + <span class="string">" handler;"</span>);</span><br><span class="line">	ccp.addConstructor(Modifier.PUBLIC, <span class="keyword">new</span> Class&lt;?&gt;[]&#123; InvocationHandler.class &#125;, <span class="keyword">new</span> Class&lt;?&gt;[<span class="number">0</span>], <span class="string">"handler=$1;"</span>);</span><br><span class="line">    ccp.addDefaultConstructor();</span><br><span class="line">	Class&lt;?&gt; clazz = ccp.toClass();</span><br><span class="line">	clazz.getField(<span class="string">"methods"</span>).set(<span class="keyword">null</span>, methods.toArray(<span class="keyword">new</span> Method[<span class="number">0</span>]));</span><br><span class="line"></span><br><span class="line">	<span class="comment">// create Proxy class.</span></span><br><span class="line">	String fcn = Proxy.class.getName() + id;</span><br><span class="line">	ccm = ClassGenerator.newInstance(cl);</span><br><span class="line">	ccm.setClassName(fcn);</span><br><span class="line">	ccm.addDefaultConstructor();</span><br><span class="line">	ccm.setSuperClass(Proxy.class);</span><br><span class="line">	ccm.addMethod(<span class="string">"public Object newInstance("</span> + InvocationHandler.class.getName() + <span class="string">" h)&#123; return new "</span> + pcn + <span class="string">"($1); &#125;"</span>);</span><br><span class="line">	Class&lt;?&gt; pc = ccm.toClass();</span><br><span class="line">	proxy = (Proxy)pc.newInstance();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>com.alibaba.dubbo.common.bytecode.ClassGenerator类的核心方法如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Class&lt;?&gt; toClass(ClassLoader loader, ProtectionDomain pd)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>( mCtc != <span class="keyword">null</span> )</span><br><span class="line">		mCtc.detach();</span><br><span class="line">	<span class="keyword">long</span> id = CLASS_NAME_COUNTER.getAndIncrement();</span><br><span class="line">	<span class="keyword">try</span></span><br><span class="line">	&#123;</span><br><span class="line">		CtClass ctcs = mSuperClass == <span class="keyword">null</span> ? <span class="keyword">null</span> : mPool.get(mSuperClass);</span><br><span class="line">		<span class="keyword">if</span>( mClassName == <span class="keyword">null</span> )</span><br><span class="line">			mClassName = ( mSuperClass == <span class="keyword">null</span> || javassist.Modifier.isPublic(ctcs.getModifiers())</span><br><span class="line">					? ClassGenerator.class.getName() : mSuperClass + <span class="string">"$sc"</span> ) + id;</span><br><span class="line">		mCtc = mPool.makeClass(mClassName);</span><br><span class="line">		<span class="keyword">if</span>( mSuperClass != <span class="keyword">null</span> )</span><br><span class="line">			mCtc.setSuperclass(ctcs);</span><br><span class="line">		mCtc.addInterface(mPool.get(DC.class.getName())); <span class="comment">// add dynamic class tag.</span></span><br><span class="line">		<span class="keyword">if</span>( mInterfaces != <span class="keyword">null</span> )</span><br><span class="line">			<span class="keyword">for</span>( String cl : mInterfaces ) mCtc.addInterface(mPool.get(cl));</span><br><span class="line">		<span class="keyword">if</span>( mFields != <span class="keyword">null</span> )</span><br><span class="line">			<span class="keyword">for</span>( String code : mFields ) mCtc.addField(CtField.make(code, mCtc));</span><br><span class="line">		<span class="keyword">if</span>( mMethods != <span class="keyword">null</span> )</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">for</span>( String code : mMethods )</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span>( code.charAt(<span class="number">0</span>) == <span class="string">':'</span> )</span><br><span class="line">					mCtc.addMethod(CtNewMethod.copy(getCtMethod(mCopyMethods.get(code.substring(<span class="number">1</span>))), code.substring(<span class="number">1</span>, code.indexOf(<span class="string">'('</span>)), mCtc, <span class="keyword">null</span>));</span><br><span class="line">				<span class="keyword">else</span></span><br><span class="line">					mCtc.addMethod(CtNewMethod.make(code, mCtc));</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>( mDefaultConstructor )</span><br><span class="line">			mCtc.addConstructor(CtNewConstructor.defaultConstructor(mCtc));</span><br><span class="line">		<span class="keyword">if</span>( mConstructors != <span class="keyword">null</span> )</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">for</span>( String code : mConstructors )</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span>( code.charAt(<span class="number">0</span>) == <span class="string">':'</span> )</span><br><span class="line">				&#123;</span><br><span class="line">					mCtc.addConstructor(CtNewConstructor.copy(getCtConstructor(mCopyConstructors.get(code.substring(<span class="number">1</span>))), mCtc, <span class="keyword">null</span>));</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span></span><br><span class="line">				&#123;</span><br><span class="line">					String[] sn = mCtc.getSimpleName().split(<span class="string">"\\$+"</span>); <span class="comment">// inner class name include $.</span></span><br><span class="line">					mCtc.addConstructor(CtNewConstructor.make(code.replaceFirst(SIMPLE_NAME_TAG, sn[sn.length-<span class="number">1</span>]), mCtc));</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> mCtc.toClass(loader, pd);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span>(RuntimeException e)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">throw</span> e;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span>(NotFoundException e)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e.getMessage(), e);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span>(CannotCompileException e)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e.getMessage(), e);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>为什么Dubbo使用Javassist动态创建类而不适用反射呢？请看Proxy类中的如下代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;ClassLoader, Map&lt;String, Object&gt;&gt; ProxyCacheMap = <span class="keyword">new</span> WeakHashMap&lt;ClassLoader, Map&lt;String, Object&gt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里省略部分代码......</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//核心在这里↓↓↓</span></span><br><span class="line"><span class="comment">// get cache by class loader.</span></span><br><span class="line">Map&lt;String, Object&gt; cache;</span><br><span class="line"><span class="keyword">synchronized</span>( ProxyCacheMap )</span><br><span class="line">&#123;</span><br><span class="line">	cache = ProxyCacheMap.get(cl);</span><br><span class="line">	<span class="keyword">if</span>( cache == <span class="keyword">null</span> )</span><br><span class="line">    &#123;</span><br><span class="line">		cache = <span class="keyword">new</span> HashMap&lt;String, Object&gt;();</span><br><span class="line">		ProxyCacheMap.put(cl, cache);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Proxy proxy = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">synchronized</span>( cache )</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">do</span></span><br><span class="line">	&#123;</span><br><span class="line">		Object value = cache.get(key);</span><br><span class="line">		<span class="keyword">if</span>( value <span class="keyword">instanceof</span> Reference&lt;?&gt; )</span><br><span class="line">		&#123;</span><br><span class="line">			proxy = (Proxy)((Reference&lt;?&gt;)value).get();</span><br><span class="line">			<span class="keyword">if</span>( proxy != <span class="keyword">null</span> )</span><br><span class="line">				<span class="keyword">return</span> proxy;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>( value == PendingGenerationMarker )</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">try</span>&#123; cache.wait(); &#125;<span class="keyword">catch</span>(InterruptedException e)&#123;&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			cache.put(key, PendingGenerationMarker);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span>( <span class="keyword">true</span> );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">long</span> id = PROXY_CLASS_COUNTER.getAndIncrement();</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>总结：Dubbo使用Javassist来代替反射很巧妙的使用了Javassist动态通过字节码在消费者中创建了类并实例化，然后放入jvm内存中缓存起来，也就是ProxyCacheMap对象中，在第一次使用的时候通过Javassist动态创建然后放入缓存中，后续就直接从缓存中拿来用了，so~~~除了第一次慢，再使用当然快了，对于这个设计膜拜了！这才符合阿里的特点啊！</p>
+</blockquote>
+<p><strong><em>Never Give Up!</em></strong></p>
+
+        
+        <div id="comment-container">
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+
+        
+
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+</html>

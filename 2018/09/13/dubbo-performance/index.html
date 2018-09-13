@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="百泽的博客">
+    <meta name="keyword"  content="腾讯">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        Dubbo性能调优 - Baize的博客 | Baize&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> sometimes code, sometimes design </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Yun Haibin</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#性能优化"><span class="toc-text">性能优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dubbo序列化-netty"><span class="toc-text">dubbo序列化+netty</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#netty线程池配置"><span class="toc-text">netty线程池配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zookeeper注册中心"><span class="toc-text">zookeeper注册中心</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM配置优化"><span class="toc-text">JVM配置优化</span></a></li></ol></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+        <div class="index-about-mobile">
+            <i> sometimes code, sometimes design </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        Dubbo性能调优
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2018-09-13 23:28:06</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#architecture" title="architecture">architecture</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><h3 id="dubbo序列化-netty"><a href="#dubbo序列化-netty" class="headerlink" title="dubbo序列化+netty"></a>dubbo序列化+netty</h3><p>目前客户端数据接口的场景99%为1k数据量以内，根据各种协议性能测试对比分析，选用dubbo序列化与netty传输方式可达到性能最大化，以下为阿里官方给出的性能测试结果，提供参考：</p>
+<p>1k string 场景：</p>
+<p><img src="http://7xtkrj.com1.z0.glb.clouddn.com/Dubbo-1k.png" alt="image"></p>
+<a id="more"></a>
+<h3 id="netty线程池配置"><a href="#netty线程池配置" class="headerlink" title="netty线程池配置"></a>netty线程池配置</h3><p>经过线上生产环境压力测试（服务器48核，由于CPU为AMD，单核处理能力偏低），评估后最优线程数配置为500，采用固定大小的线程池，计算密集型服务可最大分配8核，IO密集型服务最大分配4核。</p>
+<p>线上2016年1月31日系统无法接入请求故障维持4个多小时，排查后发现后端BOSS系统处理能力有限，且响应时间过长，导致线程满负荷状态下切配置队列的情况下，线程池打满后，请求全部进入队列排队，请求与处理能力严重失衡，导致队列很快也被打满，所有请求无法接入，服务呈现不可用状态，再经过分析后，决定去掉队列且将连接超时时间由12秒缩短为5秒，舍弃BOSS系统响应超过5秒的请求，对用户侧进行友好提示，保证BOSS响应低于5秒的用户可正常使用。</p>
+<p>配置策略：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:protocol</span> <span class="attr">name</span>=<span class="string">"dubbo"</span> <span class="attr">port</span>=<span class="string">"$&#123;dubbo.protocol.port&#125;"</span> <span class="attr">server</span>=<span class="string">"netty"</span> <span class="attr">client</span>=<span class="string">"netty"</span> <span class="attr">serialization</span>=<span class="string">"dubbo"</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span> <span class="attr">threadpool</span>=<span class="string">"fixed"</span> <span class="attr">threads</span>=<span class="string">"500"</span> <span class="attr">queues</span>=<span class="string">"0"</span> <span class="attr">buffer</span>=<span class="string">"8192"</span> <span class="attr">accepts</span>=<span class="string">"0"</span> <span class="attr">payload</span>=<span class="string">"8388608"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="zookeeper注册中心"><a href="#zookeeper注册中心" class="headerlink" title="zookeeper注册中心"></a>zookeeper注册中心</h3><p>支持基于网络的集群方式，适合生产环境服务数量较多环境下使用，且配置使用方式简单，可靠性高。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">protocol</span>=<span class="string">"zookeeper"</span> <span class="attr">address</span>=<span class="string">"$&#123;dubbo.registry.address&#125;"</span> <span class="attr">file</span>=<span class="string">"$&#123;user.home&#125;/.dubbo/$&#123;dubbo.registry.file&#125;"</span>/&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>特别注意：</strong> zookeeper采用集群方式保证注册中心服务的高可用与高性能，部署节点数应为奇数。</p>
+<h3 id="JVM配置优化"><a href="#JVM配置优化" class="headerlink" title="JVM配置优化"></a>JVM配置优化</h3><ol>
+<li><p>方案一：通用方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#JAVA_HOME=/application/search/vertical-search/vertical-search/jdk1.7.0_51</span><br><span class="line">VERTICAL_SEARCH_LOG=&quot;/data/gclog/&quot;</span><br><span class="line">#VERTICAL_SEARCH_CONF=&quot;/application/search/vertical-search/conf&quot;</span><br><span class="line"></span><br><span class="line">JAVA_OPTS=&apos;-server -verbose:gc -Xms6000m -Xmx6000m -Xmn2000m -XX:PermSize=300m -XX:MaxPermSize=300m -Xss256k -XX:NewSize=500m -XX:MaxNewSize=500m -XX:+UseConcMarkSweepGC -XX:ParallelGCThreads=16 -XX:+UseCMSCompactAtFullCollection -XX:CMSMaxAbortablePrecleanTime=5000 -XX:+UseParNewGC -XX:+DisableExplicitGC -Xloggc:$&#123;VERTICAL_SEARCH_LOG&#125;/logs/gc.log -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$&#123;VERTICAL_SEARCH_LOG&#125;/logs/HeapDumpOnOutOfMemoryError.log -XX:+DisableExplicitGC -XX:+PrintGC -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -DVERTICAL_SEARCH_LOG=$&#123;VERTICAL_SEARCH_LOG&#125;&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方案二：又有改进了，上面方法不太好，因为没有用到救助空间，所以年老代容易满，CMS执行会比较频繁。我改善了一下，还是用救助空间，但是把救助空间加大，这样也不会有promotion failed。具体操作上，32位Linux和64位Linux好像不一样，64位系统似乎只要配置MaxTenuringThreshold参数，CMS还是有暂停。为了解决暂停问题和promotion failed问题，最后我设置-XX:SurvivorRatio=1 ，并把MaxTenuringThreshold去掉，这样即没有暂停又不会有promotoin failed，而且更重要的是，年老代和永久代上升非常慢（因为好多对象到不了年老代就被回收了），所以CMS执行频率非常低，好几个小时才执行一次，这样，服务器都不用重启了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#JAVA_HOME=/application/search/vertical-search/vertical-search/jdk1.7.0_51</span><br><span class="line">VERTICAL_SEARCH_LOG=&quot;/data/gc&quot;</span><br><span class="line"></span><br><span class="line">JAVA_OPTS=&apos;-server -Xmx4000M -Xms4000M -Xmn600M -XX:PermSize=500M -XX:MaxPermSize=500M -Xss256K -XX:+DisableExplicitGC -XX:SurvivorRatio=1 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:CMSFullGCsBeforeCompaction=0 -XX:+CMSClassUnloadingEnabled -XX:LargePageSizeInBytes=128M -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=80 -XX:SoftRefLRUPolicyMSPerMB=0 -XX:+PrintClassHistogram -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintHeapAtGC -Xloggc:$&#123;VERTICAL_SEARCH_LOG&#125;/logs/gc.log&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方案三：64位jdk参考设置，年老代涨得很慢，CMS执行频率变小，CMS没有停滞，也不会有promotion failed问题，内存回收得很干净.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#JAVA_HOME=/application/search/vertical-search/vertical-search/jdk1.7.0_51</span><br><span class="line">VERTICAL_SEARCH_LOG=&quot;/data/gc&quot;</span><br><span class="line"></span><br><span class="line">JAVA_OPTS=&apos;-server -Xmx4000M -Xms4000M -Xmn600M -XX:PermSize=500M -XX:MaxPermSize=500M -Xss256K -XX:+DisableExplicitGC -XX:SurvivorRatio=1 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:CMSFullGCsBeforeCompaction=0 -XX:+CMSClassUnloadingEnabled -XX:LargePageSizeInBytes=128M -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:SoftRefLRUPolicyMSPerMB=0 -XX:+PrintClassHistogram -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintHeapAtGC -Xloggc:$&#123;VERTICAL_SEARCH_LOG&#125;/logs/gc.log&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方案四：docker tomcat jvm优化方案:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Xmx2048M -Xms2048M -Xmn512M -XX:PermSize=320M -XX:MaxPermSize=320M -Xss256K -XX:+DisableExplicitGC -XX:SurvivorRatio=1 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:CMSFullGCsBeforeCompaction=0 -XX:+CMSClassUnloadingEnabled -XX:LargePageSizeInBytes=128M -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=80 -XX:SoftRefLRUPolicyMSPerMB=0 -XX:+PrintClassHistogram -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintHeapAtGC</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong><em>Never Give Up!</em></strong></p>
+
+        
+        <div id="comment-container">
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+
+        
+
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+</html>
