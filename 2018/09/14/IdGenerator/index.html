@@ -137,7 +137,8 @@
 </span>
     </div>
     <div class="post-content ">
-        <h2 id="全局唯一ID的几种生成方案"><a href="#全局唯一ID的几种生成方案" class="headerlink" title="全局唯一ID的几种生成方案"></a>全局唯一ID的几种生成方案</h2><h3 id="方案一：Java-UUID"><a href="#方案一：Java-UUID" class="headerlink" title="方案一：Java UUID"></a>方案一：Java UUID</h3><p>Java UUID算法的核心思想是结合机器的网卡、机器时间、通过这些seed构造一个随机数用来生成UUID。<br><strong>优点：</strong></p>
+        <h2 id="全局唯一ID的几种生成方案"><a href="#全局唯一ID的几种生成方案" class="headerlink" title="全局唯一ID的几种生成方案"></a>全局唯一ID的几种生成方案</h2><h3 id="方案一：Java-UUID"><a href="#方案一：Java-UUID" class="headerlink" title="方案一：Java UUID"></a>方案一：Java UUID</h3><p>Java UUID算法的核心思想是结合机器的网卡、机器时间、通过这些seed构造一个随机数用来生成UUID。</p>
+<p><strong>优点：</strong></p>
 <ol>
 <li>本地生成ID，不需要进行远程调用，时延低；</li>
 <li>扩展性好，基本可以认为没有性能上限；</li>
@@ -147,7 +148,9 @@
 <li>无法保证趋势有序；</li>
 <li>uuid过长且为字符串表示，作为主键建立索引查询效率低；</li>
 </ol>
-<h3 id="方案二：Twitter开源snowflake算法"><a href="#方案二：Twitter开源snowflake算法" class="headerlink" title="方案二：Twitter开源snowflake算法"></a>方案二：Twitter开源snowflake算法</h3><p>snowflake是Twitter开源的分布式ID生成算法，结果是一个64位long型的ID。其核心思想是：1位标识（由于long基本类型在Java中是带符号的，最高位是符号位，正数是0，负数是1，所以id一般是正数，最高位是0），使用41bit作为毫秒数，10bit作为机器的ID（可以部署在1024个节点，5个bit是数据中心，5个bit的机器ID），12bit作为毫秒内的流水号（意味着每个节点在每毫秒可以产生4096个ID）。<br><strong>例如：</strong>时间戳是1426212000000，假定分片ID是53，自增长序列是4，则生成的ID是：<br>5981966696448054276 = 1426212000000 &lt;&lt; 22 + 53 &lt;&lt; 10 + 4<br><strong>优点：</strong></p>
+<h3 id="方案二：Twitter开源snowflake算法"><a href="#方案二：Twitter开源snowflake算法" class="headerlink" title="方案二：Twitter开源snowflake算法"></a>方案二：Twitter开源snowflake算法</h3><p>snowflake是Twitter开源的分布式ID生成算法，结果是一个64位long型的ID。其核心思想是：1位标识（由于long基本类型在Java中是带符号的，最高位是符号位，正数是0，负数是1，所以id一般是正数，最高位是0），使用41bit作为毫秒数，10bit作为机器的ID（可以部署在1024个节点，5个bit是数据中心，5个bit的机器ID），12bit作为毫秒内的流水号（意味着每个节点在每毫秒可以产生4096个ID）。</p>
+<p><strong>例如：</strong><br>时间戳是1426212000000，假定分片ID是53，自增长序列是4，则生成的ID是：<br>5981966696448054276 = 1426212000000 &lt;&lt; 22 + 53 &lt;&lt; 10 + 4</p>
+<p><strong>优点：</strong></p>
 <ol>
 <li>整个分布式系统内不会产生ID碰撞(由数据中心ID和机器ID作区分)；</li>
 <li>数字ID趋势有序；</li>
@@ -159,7 +162,8 @@
 <li>需要使用者自己维护DataId与MachineId；</li>
 <li>在单机上是递增的，但是由于涉及到分布式环境，每台机器上的时钟不可能完全同步，所以多台机器同时生成不能保证全局递增；</li>
 </ol>
-<h3 id="方案三：毫秒时间-自增数"><a href="#方案三：毫秒时间-自增数" class="headerlink" title="方案三：毫秒时间+自增数"></a>方案三：毫秒时间+自增数</h3><p>采用毫秒时间18位数字+3位自增数，每毫秒理论最多可以生成100个，方法内保证线程安全，单点不会出现重复。<br><strong>优点：</strong></p>
+<h3 id="方案三：毫秒时间-自增数"><a href="#方案三：毫秒时间-自增数" class="headerlink" title="方案三：毫秒时间+自增数"></a>方案三：毫秒时间+自增数</h3><p>采用毫秒时间18位数字+3位自增数，每毫秒理论最多可以生成100个，方法内保证线程安全，单点不会出现重复。</p>
+<p><strong>优点：</strong></p>
 <ol>
 <li>使用简单，性能尚可；</li>
 <li>生成ID趋势有序；</li>
