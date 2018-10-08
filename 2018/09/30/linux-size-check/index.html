@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="百泽的博客">
+    <meta name="keyword"  content="腾讯">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        Docker占用磁盘空间检查 - Baize的博客 | Baize&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 大道至善，大道至简 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Baize</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#磁盘爆掉的几种情况"><span class="toc-text">磁盘爆掉的几种情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#现场的同学按如下方法依次检查"><span class="toc-text">现场的同学按如下方法依次检查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法零：-检查系统根目录下每个文件夹的大小"><span class="toc-text">方法零： 检查系统根目录下每个文件夹的大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法一：-容器内部日志非常大（请确保先按方法零检查过了）"><span class="toc-text">方法一： 容器内部日志非常大（请确保先按方法零检查过了）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#执行完后会输出如下格式："><span class="toc-text">执行完后会输出如下格式：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#然后进到容器后通过-du-–max-depth-2-快速发现大文件"><span class="toc-text">然后进到容器后通过 du / –max-depth=2 快速发现大文件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法二：-容器使用的volume使用过大"><span class="toc-text">方法二： 容器使用的volume使用过大</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法三-容器的系统日志没有限制大小"><span class="toc-text">方法三 容器的系统日志没有限制大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些其他可能占用空间的地方"><span class="toc-text">一些其他可能占用空间的地方</span></a></li></ol></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+        <div class="index-about-mobile">
+            <i> 大道至善，大道至简 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        Docker占用磁盘空间检查
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2018-09-30 21:32:06</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#architecture" title="architecture">architecture</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <blockquote>
+<p>检查磁盘被Docker容器占用的情况</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="磁盘爆掉的几种情况"><a href="#磁盘爆掉的几种情况" class="headerlink" title="磁盘爆掉的几种情况"></a>磁盘爆掉的几种情况</h2><ol>
+<li>系统磁盘没有空间，解决办法：删掉 /var/log/ 下边的带日期的日志，清空 /var/log/messages 内容</li>
+<li>容器使用的大磁盘空间不够，又有三个地方会使用大量的磁盘<ul>
+<li>容器内部日志非常大，处理办法见方法一</li>
+<li>容器内部产生非常多或者非常大的文件，但是这个文件的位置又通过volume 挂载到了物理机上，处理办法见方法二</li>
+<li>对特别老的部署环境，还有可能是容器的系统日志没有限制大小，处理办法见方法三</li>
+</ul>
+</li>
+</ol>
+<h2 id="现场的同学按如下方法依次检查"><a href="#现场的同学按如下方法依次检查" class="headerlink" title="现场的同学按如下方法依次检查"></a>现场的同学按如下方法依次检查</h2><h3 id="方法零：-检查系统根目录下每个文件夹的大小"><a href="#方法零：-检查系统根目录下每个文件夹的大小" class="headerlink" title="方法零： 检查系统根目录下每个文件夹的大小"></a>方法零： 检查系统根目录下每个文件夹的大小</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo du / -lh --max-depth=1 --exclude=overlay --exclude=proc</span><br></pre></td></tr></table></figure>
+<p>看看除了容器之外有没有其它目录使用磁盘特别大，如果有那么一层层进去通过du命令来查看，比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#sudo du / -lh --max-depth=1 --exclude=overlay --exclude=proc</span><br><span class="line">16K    /dev</span><br><span class="line">16K    /lost+found</span><br><span class="line">4.0K    /media</span><br><span class="line">17G    /home</span><br><span class="line">136M    /boot</span><br><span class="line">832K    /run</span><br><span class="line">1.9G    /usr</span><br><span class="line">75M    /tmp</span><br><span class="line">12K    /log</span><br><span class="line">8.5G    /var</span><br><span class="line">4.0K    /srv</span><br><span class="line">0    /proc</span><br><span class="line">22M    /etc</span><br><span class="line">84G    /root</span><br><span class="line">4.0K    /mnt</span><br><span class="line">508M    /opt</span><br><span class="line">0    /sys</span><br><span class="line">112G    /</span><br></pre></td></tr></table></figure>
+<p>那么这个案例中应该查看 /root下为什么用掉了84G（总共用了112G）， 先 cd /root 然后执行： sudo du . -lh –max-depth=1 –exclude=overlay 进一步查看 /root 目录下每个文件夹的大小</p>
+<p><strong>如果方法零没找到占用特别大的磁盘文件，那么一般来说是容器日志占用太多的磁盘空间，请看方法一</strong></p>
+<h3 id="方法一：-容器内部日志非常大（请确保先按方法零检查过了）"><a href="#方法一：-容器内部日志非常大（请确保先按方法零检查过了）" class="headerlink" title="方法一： 容器内部日志非常大（请确保先按方法零检查过了）"></a>方法一： 容器内部日志非常大（请确保先按方法零检查过了）</h3><p>在磁盘不够的物理机上执行如下脚本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo docker ps -a -q &gt;containers.list</span><br><span class="line"></span><br><span class="line">sudo cat containers.list | xargs sudo docker inspect $1 | grep merged | awk -F \&quot; &apos;&#123; print $4 &#125;&apos; | sed &apos;s/\/merged//g&apos; | xargs sudo du  --max-depth=0 $1 &gt;containers.size </span><br><span class="line"></span><br><span class="line">sudo paste containers.list containers.size | awk &apos;&#123; print $1, $2 &#125;&apos;  | sort -nk2 &gt;real_size.log</span><br><span class="line"></span><br><span class="line">sudo tail -10 real_size.log  | awk &apos;BEGIN &#123;print &quot;\tcontainer     size\tunit&quot;&#125; &#123; print NR&quot;:\t&quot; $0&quot;\t kB&quot; &#125;&apos;</span><br></pre></td></tr></table></figure>
+<h5 id="执行完后会输出如下格式："><a href="#执行完后会输出如下格式：" class="headerlink" title="执行完后会输出如下格式："></a>执行完后会输出如下格式：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">       container     size    unit</span><br><span class="line">1:    22690f16822f 3769980     kb</span><br><span class="line">2:    82b4ae98eeed 4869324     kb</span><br><span class="line">3:    572a1b7c8ef6 10370404     kb</span><br><span class="line">4:    9f9250d98df6 10566776     kb</span><br><span class="line">5:    7fab70481929 13745648     kb</span><br><span class="line">6:    4a14b58e3732 29873504     kb</span><br><span class="line">7:    8a01418b6df2 30432068     kb</span><br><span class="line">8:    83dc85caaa5c 31010960     kb</span><br><span class="line">9:    433e51df88b1 35647052     kb</span><br><span class="line">10:    4b42818a8148 61962416     kb</span><br></pre></td></tr></table></figure>
+<p>第二列是容器id，第三列是磁盘大小，第四列是单位， 占用最大的排在最后面</p>
+<h5 id="然后进到容器后通过-du-–max-depth-2-快速发现大文件"><a href="#然后进到容器后通过-du-–max-depth-2-快速发现大文件" class="headerlink" title="然后进到容器后通过 du / –max-depth=2 快速发现大文件"></a>然后进到容器后通过 du / –max-depth=2 快速发现大文件</h5><h3 id="方法二：-容器使用的volume使用过大"><a href="#方法二：-容器使用的volume使用过大" class="headerlink" title="方法二： 容器使用的volume使用过大"></a>方法二： 容器使用的volume使用过大</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$sudo du -l /data/lib/docker/defaultVolumes --max-depth=1 | sort -rn</span><br><span class="line">456012884    /data/lib/docker/defaultVolumes</span><br><span class="line">42608332    /data/lib/docker/defaultVolumes/task_3477_g0_ark-metadb_miniDBPaaS-MetaDB_1</span><br><span class="line">32322220    /data/lib/docker/defaultVolumes/task_3477_g0_dbpaas-metadb_dbpaas_1</span><br><span class="line">27461120    /data/lib/docker/defaultVolumes/task_3001_g0_ark-metadb_miniDBPaaS-MetaDB_1</span><br><span class="line">27319360    /data/lib/docker/defaultVolumes/task_36000_g0_ark-metadb_miniDBPaaS-MetaDB</span><br><span class="line">27313836    /data/lib/docker/defaultVolumes/task_3600_g0_dbpaas-metadb_minidbpaas</span><br><span class="line">27278692    /data/lib/docker/defaultVolumes/task_3604_g0_ark-metadb_miniDBPaaS-MetaDB_1</span><br><span class="line">27277004    /data/lib/docker/defaultVolumes/task_3603_g0_ark-metadb_miniDBPaaS-MetaDB_1</span><br><span class="line">27275736    /data/lib/docker/defaultVolumes/task_3542_g0_ark-metadb_miniDBPaaS-MetaDB</span><br><span class="line">27271428    /data/lib/docker/defaultVolumes/task_3597_g0_ark-metadb_miniDBPaaS-MetaDB</span><br><span class="line">27270840    /data/lib/docker/defaultVolumes/task_3603_g0_dbpaas-metadb_minidbpaas_1</span><br><span class="line">27270492    /data/lib/docker/defaultVolumes/task_3603_g0_dbpaas-metadb_minidbpaas</span><br><span class="line">27270468    /data/lib/docker/defaultVolumes/task_3600_g0_ark-metadb_miniDBPaaS-MetaDB</span><br><span class="line">27270252    /data/lib/docker/defaultVolumes/task_3535_g0_ark-metadb_miniDBPaaS-MetaDB</span><br><span class="line">27270244    /data/lib/docker/defaultVolumes/task_3538_g0_ark-metadb_miniDBPaaS-MetaDB</span><br><span class="line">27270244    /data/lib/docker/defaultVolumes/task_3536_g0_ark-metadb_miniDBPaaS-MetaDB</span><br><span class="line">25312404    /data/lib/docker/defaultVolumes/task_3477_g0_dncs-server_middleware-dncs_2</span><br></pre></td></tr></table></figure>
+<p>/data/lib/docker/defaultVolumes 参数是方舟默认volume存放的目录（一般是docker的存储路径下 –graph=/data/lib/docker) ，第一列是大小，后面是容器名</p>
+<p>volume路径在物理机上也有可能是 /var/lib/docker 或者 /mw/mvdocker/ 之类的路径下，这个要依据安装参数来确定，可以用如下命令来找到这个路径：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl status docker -l | grep --color graph</span><br></pre></td></tr></table></figure>
+<p>结果如下，红色参数后面的路径就是docker 安装目录，到里面去找带volume的字眼：</p>
+<p><img src="http://ata2-img.cn-hangzhou.img-pub.aliyun-inc.com/9b7e489576840f72a5bd13e969abce39.png" alt="image.png"></p>
+<p>找到 volume很大的文件件后同样可以进到这个文件夹中执行如下命令快速发现大文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du . --max-depth=2</span><br></pre></td></tr></table></figure>
+<h3 id="方法三-容器的系统日志没有限制大小"><a href="#方法三-容器的系统日志没有限制大小" class="headerlink" title="方法三 容器的系统日志没有限制大小"></a>方法三 容器的系统日志没有限制大小</h3><p>这种情况只针对2017年上半年之前的部署环境，后面部署的环境默认都控制了这些日志不会超过150M</p>
+<p>按照方法二的描述先找到docker 安装目录，cd 进去，然后 ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du ./containers --max-depth=2</span><br></pre></td></tr></table></figure>
+<p>就很快找到那个大json格式的日志文件了,然后执行清空这个大文件的内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &apos;&apos; | sudo tee 大文件名</span><br></pre></td></tr></table></figure>
+<h3 id="一些其他可能占用空间的地方"><a href="#一些其他可能占用空间的地方" class="headerlink" title="一些其他可能占用空间的地方"></a>一些其他可能占用空间的地方</h3><ul>
+<li>机器上镜像太多，可以删掉一些没用的： sudo docker images -q | xargs sudo docker rmi</li>
+<li>机器上残留的volume太多，删：sudo docker volume ls -q | xargs sudo docker volume rm</li>
+<li>物理文件被删了，但是还有进程占用这个文件句柄，导致文件对应的磁盘空间没有释放，检查： lsof |　grep deleted 如果这个文件非常大的话，只能通过重启这个进程来真正释放磁盘空间</li>
+</ul>
+<p><strong><em>Never Give Up!</em></strong></p>
+
+        
+        <div id="comment-container">
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+
+        
+
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+</html>
